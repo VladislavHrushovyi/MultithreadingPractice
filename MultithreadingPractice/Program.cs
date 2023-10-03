@@ -1,3 +1,12 @@
-﻿// See https://aka.ms/new-console-template for more information
+﻿
+using MultithreadingPractice.DoSomeProcess;
 
-Console.WriteLine("Hello, World!");
+WithLock withLock = new WithLock();
+Parallel.For(1, 100, (i) =>
+{
+    withLock.WriteToFile(Task.CurrentId.ToString(), $"{i}");
+    Console.WriteLine($"{i} is done");
+});
+
+Console.WriteLine("Process with lock completed");
+Console.ReadKey();
