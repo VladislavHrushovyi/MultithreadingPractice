@@ -1,21 +1,18 @@
-﻿namespace MultithreadingPractice.DoSomeProcess;
+﻿using MultithreadingPractice.Utils;
 
-public class WithLock
+namespace MultithreadingPractice.DoSomeProcess;
+
+public class WithLock : ISomeProcess
 {
-    private readonly object _lockObj = new();
-    public WithLock()
-    {
-        
-    }
+    private readonly WriteToFile _writer = new();
 
-    public void WriteToFile(string nameThread, string text)
+    public void WriteToFile(string text, string threadId)
     {
-         lock (_lockObj)
+         lock (_writer)
          {
             try
             {
-                using var streamWriter = File.AppendText("test.txt");
-                streamWriter.WriteLine($"Thread {nameThread} : {text}");
+                _writer.WriteLineToFile("./test.txt", text, threadId);
             }
             catch (Exception e)
             {
