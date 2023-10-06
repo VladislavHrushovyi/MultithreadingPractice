@@ -2,7 +2,7 @@
 using MultithreadingPractice.DoSomeProcess;
 
 File.Delete("./test.txt");
-ISomeProcess withLock = new WithMutex();
+ISomeProcess withLock = new WithSemaphore();
 Parallel.For(1, 1000, (i) =>
 {
     var threadId = Environment.CurrentManagedThreadId.ToString();
