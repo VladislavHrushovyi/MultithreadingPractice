@@ -13,14 +13,17 @@ using MultithreadingPractice.DoSomeProcess;
 //
 // Console.WriteLine("Process completed");
 
-var fetchClient = new SomeFetching();
-var fetchingTask = Enumerable.Range(1, 100)
-    .Select(i => fetchClient.FetchFromUrl($"URL: {i}"))
-    .ToArray();
-while (!Task.WhenAll(fetchingTask).IsCompleted)
-{
-    Console.WriteLine("Awaiting fetching...");
-    await Task.Delay(200);
-}
-Console.WriteLine("FETCHED ALL DATA");
+// var fetchClient = new SomeFetching();
+// var fetchingTask = Enumerable.Range(1, 100)
+//     .Select(i => fetchClient.FetchFromUrl($"URL: {i}"))
+//     .ToArray();
+// while (!Task.WhenAll(fetchingTask).IsCompleted)
+// {
+//     Console.WriteLine("Awaiting fetching...");
+//     await Task.Delay(200);
+// }
+// Console.WriteLine("FETCHED ALL DATA");
+var interlocked = new MultithreadingPractice.DoSomeProcess.Interlocked(); 
+Parallel.For(1, 1000, (i) => interlocked.SomeProcess(Random.Shared.Next(1, 1000)));
+Console.WriteLine(interlocked.Count);
 Console.ReadKey();
